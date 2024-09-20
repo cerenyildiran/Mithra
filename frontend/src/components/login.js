@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
@@ -31,7 +31,9 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="login-btn">Log in</button>
+        <button type="submit" className="login-btn">
+          Log in
+        </button>
       </form>
     </div>
   );

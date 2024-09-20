@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const categories = [
-    { name: 'Animals', path: '/animals' },
-    { name: 'Foods', path: '/foods' },
-    { name: 'Celebrities', path: '/celebrities' },
-    { name: 'Politics', path: '/politics' },
-    { name: 'Art', path: '/art' }
+    { name: "Animals", path: "/animals" },
+    { name: "Foods", path: "/foods" },
+    { name: "Celebrities", path: "/celebrities" },
+    { name: "Politics", path: "/politics" },
+    { name: "Art", path: "/art" },
   ];
 
   return (
