@@ -217,6 +217,16 @@ input:focus {
   background-color: #0056b3;
 }
 
+.success-msg {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.error-msg {
+  color: red;
+  margin-bottom: 10px;
+}
+
 /* Profile */
 .profile-page {
   display: flex;

@@ -2,6 +2,9 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
@@ -43,4 +46,33 @@ def login_view(request):
         }, status=200)
     else:
         return JsonResponse({'error': 'Invalid Username or Password'}, status=400)
+    
+
+@require_http_methods(["POST"])
+@csrf_exempt
+def register_view(request):
+    if request.headers.get('Content-Type') == 'application/json':
+        data = json.loads(request.body.decode('utf-8'))
+    else:
+        data = request.POST
+
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    if not username or not password or not email:
+        return JsonResponse({'error': 'Please enter the information completely.'}, status=400)
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'error': 'This username is already taken.'}, status=400)
+    if User.objects.filter(email=email).exists():
+        return JsonResponse({'error': 'An account with this email address already exists.'}, status=400)
+    try:
+        validate_password(password)
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        return JsonResponse({'success': 'User registered successfully.'}, status=201)
+    except ValidationError as e:
+        return JsonResponse({'error': list(e.messages)}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
     
