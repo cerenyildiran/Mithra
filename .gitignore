@@ -1,2 +1,4 @@
 node_modules
 backend/backend/__pycache__
+backend/myapp/__pycache__
+backend/myapp/migrations
