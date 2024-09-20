@@ -8,6 +8,9 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
+from rest_framework_simplejwt.authentication import default_user_authentication_rule
 
 # Create your views here.
 def home(request):
@@ -75,4 +78,39 @@ def register_view(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-    
+
+
+@require_http_methods(["POST"])
+@csrf_exempt
+def verify_token(request):
+    if request.headers.get('Content-Type') == 'application/json':
+        data = json.loads(request.body.decode('utf-8'))
+    else:
+        data = request.POST
+
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Tokens are required'}, status=400)
+
+    try:
+        untyped_token = UntypedToken(token)
+        user_id = untyped_token['user_id']
+        user = User.objects.get(id=user_id)
+
+        if not default_user_authentication_rule(user):
+            raise InvalidToken('User is inactive or deleted')
+
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name
+        }
+        return JsonResponse({
+            'user': user_data
+        }, status=200)
+    except (InvalidToken, TokenError) as e:
+        print(e)
+        return JsonResponse({'error': str(e)}, status=400)
+
