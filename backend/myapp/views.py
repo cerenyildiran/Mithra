@@ -11,7 +11,7 @@ import json
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
 from rest_framework_simplejwt.authentication import default_user_authentication_rule
-from .models import Post
+from .models import Post, Like
 
 # Create your views here.
 def home(request):
@@ -194,6 +194,21 @@ def get_user_posts(request, user_id):
     return JsonResponse(posts_data, safe=False)
 
 
+@require_http_methods(['GET'])
+def get_user_likes(request, user_id):
+    likes = Like.objects.filter(user_id=user_id).select_related('post', 'user')
+    likes_data = [
+        {
+            "like_id": like.id,
+            "post_id": like.post.id,
+            "post_title": like.post.title,
+            "post_content": like.post.content,
+            "post_category": like.post.category,
+            "author_username": like.post.author.username
+        }
+        for like in likes
+    ]
+    return JsonResponse(likes_data, safe=False)
 
 
 

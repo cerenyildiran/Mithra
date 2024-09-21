@@ -4,6 +4,7 @@ import axios from "axios";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from "react-router-dom";
 import MyPosts from "./my-posts";
+import MyLikes from "./my-likes";
 
 const Profile = ({ user }) => {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ const Profile = ({ user }) => {
         </TabPanel>
         <TabPanel>
           <h2>Likes</h2>
+          {user && <MyLikes userId={user.id} />}
         </TabPanel>
         <TabPanel>
           <h2>Saved</h2>
