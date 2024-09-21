@@ -376,3 +376,70 @@ input:focus {
   text-align: center;
   margin-top: 0;
 }
+
+
+/* Create post */
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 80vh;
+  padding: 40px 0;
+  background-color: #f0f0f0;
+  font-family: 'Arial', sans-serif;
+  box-sizing: border-box; 
+}
+
+.post-heading {
+  color: #202020;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.post-form {
+  width: 80%;
+  max-width: 800px;
+}
+
+.post-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: none; 
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.category-select, .submit-button {
+  flex: 1;
+  padding: 12px;
+  margin: 0 10px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.category-select {
+  border: 2px solid #ccc;
+  background-color: white;
+}
+
+.submit-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #004494;
+}

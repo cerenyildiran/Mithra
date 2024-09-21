@@ -11,6 +11,7 @@ import json
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
 from rest_framework_simplejwt.authentication import default_user_authentication_rule
+from .models import Post
 
 # Create your views here.
 def home(request):
@@ -113,4 +114,58 @@ def verify_token(request):
     except (InvalidToken, TokenError) as e:
         print(e)
         return JsonResponse({'error': str(e)}, status=400)
+
+
+@require_http_methods(['POST'])
+@csrf_exempt
+def create_post(request):
+    if request.headers.get('Content-Type') == 'application/json':
+        data = json.loads(request.body.decode('utf-8'))
+    else:
+        return JsonResponse({'error': 'Content type must be application/json'}, status=415)
+
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=400)
+    
+    response = verify_token(request)
+    response_data = json.loads(response.content)
+    
+    if 'error' in response_data:
+        return response
+    
+    user_data = response_data.get('user')
+    if not user_data:
+        return JsonResponse({'error': 'Token validation failed'}, status=401)
+
+    title = data.get('title')
+    content = data.get('content')
+    category = data.get('category')
+
+    if not 3 <= len(title) <= 50:
+        return JsonResponse({'error': 'Title must be between 3 and 50 characters'}, status=400)
+    
+    if len(content) > 300:
+        return JsonResponse({'error': 'Content must be under 300 characters'}, status=400)
+    
+    if category not in ['animals', 'foods', 'celebrities', 'politics', 'art']:
+        return JsonResponse({'error': 'Invalid category'}, status=400)
+
+    try:
+        user = User.objects.get(id=user_data['id'])
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+
+    post = Post(title=title, content=content, author=user, category=category)
+    post.save()
+
+    return JsonResponse({'message': 'Post created successfully'}, status=201)
+
+
+
+
+
+
+
+
 

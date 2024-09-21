@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../middleware/useUser";
+import CreatePost from "./profile/create-post";
 
 const Home = () => {
+  const {user} = useUser();
   const categories = [
     { name: "Animals", path: "/animals" },
     { name: "Foods", path: "/foods" },
@@ -24,6 +27,7 @@ const Home = () => {
       </aside>
       <main className="main-content">
         <h1>Welcome!</h1>
+        {user && <CreatePost />}
       </main>
     </div>
   );
