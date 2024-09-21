@@ -32,6 +32,9 @@ const CreatePost = () => {
       );
       setMessage(response.data.message);
       setError(null);
+      setTitle("");
+      setContent("");
+      setCategory("");
     } catch (err) {
       setError(
         err.response
