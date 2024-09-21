@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from "react-router-dom";
+import MyPosts from "./my-posts";
 
 const Profile = ({ user }) => {
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ const Profile = ({ user }) => {
         </TabList>
         <TabPanel>
           <h2>Posts</h2>
+          {user && <MyPosts userId={user.id} />}
         </TabPanel>
         <TabPanel>
           <h2>Likes</h2>

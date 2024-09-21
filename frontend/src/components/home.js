@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../middleware/useUser";
 import CreatePost from "./profile/create-post";
+import Posts from "./posts";
 
 const Home = () => {
   const {user} = useUser();
@@ -28,6 +29,7 @@ const Home = () => {
       <main className="main-content">
         <h1>Welcome!</h1>
         {user && <CreatePost />}
+        <Posts />
       </main>
     </div>
   );

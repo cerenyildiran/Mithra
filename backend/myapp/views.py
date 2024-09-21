@@ -162,7 +162,36 @@ def create_post(request):
     return JsonResponse({'message': 'Post created successfully'}, status=201)
 
 
+@require_http_methods(['GET'])
+def get_posts(request):
+    posts = Post.objects.all()
+    posts_data = []
+    for post in posts:
+        post_data = {
+            "id": post.id,
+            "title": post.title,
+            "content": post.content,
+            "category": post.category,
+            "author": post.author.username
+        }
+        posts_data.append(post_data)
+    
+    return JsonResponse(posts_data, safe=False)
 
+@require_http_methods(['GET'])
+def get_user_posts(request, user_id):
+    posts = Post.objects.filter(author_id=user_id)
+    posts_data = [
+        {
+            "id": post.id,
+            "title": post.title,
+            "content": post.content,
+            "category": post.category,
+            "author": post.author.username
+        }
+        for post in posts
+    ]
+    return JsonResponse(posts_data, safe=False)
 
 
 
