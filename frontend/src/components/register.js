@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../middleware/useUser";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -9,7 +11,33 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const {user, setUser} = useUser()
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = Cookies.get('accessToken');
+    if (accessToken) {
+      verifyUser(accessToken);
+    }
+  }, []);
+
+  const verifyUser = async (token) => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/verifyToken/', {
+        token
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.data.user) {
+        setUser(response.data.user);
+        navigate('/')
+      }
+    } catch (err) {
+      console.error('Token verification error:', err);
+    }
+  };
 
 
   const handleSubmit = async (e) => {
