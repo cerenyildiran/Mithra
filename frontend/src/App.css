@@ -98,6 +98,77 @@ body {
   margin-right: 1.5rem !important;
 }
 
+.user-greeting {
+  margin-right: 0.8rem;
+  color: #343a40;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.profile-icon {
+  margin-right: 0.5rem;
+  color: #343a40;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 10rem;
+}
+
+.profile-icon:hover {
+  color: #0056b3;
+}
+
+.dropdown-icon {
+  color: #343a40;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-icon:hover {
+  color: #0056b3;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+
+}
+
+.dropdown-item {
+  padding: 12px 20px;
+  color: #000000;
+  text-decoration: none;
+  display: block;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #0056b3;
+}
+
+button.dropdown-item {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+button.dropdown-item:hover {
+  background-color: #c92828;
+  color: #000000;
+}
+
+
+
 /* Sidebar */
 .sidebar {
   width: 300px;
