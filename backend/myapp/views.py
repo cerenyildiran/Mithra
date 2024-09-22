@@ -172,6 +172,7 @@ def get_posts(request):
             "title": post.title,
             "content": post.content,
             "category": post.category,
+            "created_at": post.created_at,
             "author": post.author.username
         }
         posts_data.append(post_data)
@@ -187,6 +188,7 @@ def get_user_posts(request, user_id):
             "title": post.title,
             "content": post.content,
             "category": post.category,
+            "created_at": post.created_at,
             "author": post.author.username
         }
         for post in posts
@@ -200,11 +202,12 @@ def get_user_likes(request, user_id):
     likes_data = [
         {
             "like_id": like.id,
-            "post_id": like.post.id,
-            "post_title": like.post.title,
-            "post_content": like.post.content,
-            "post_category": like.post.category,
-            "author_username": like.post.author.username
+            "id": like.post.id,
+            "title": like.post.title,
+            "content": like.post.content,
+            "category": like.post.category,
+            "created_at": like.post.created_at,
+            "author": like.post.author.username
         }
         for like in likes
     ]
