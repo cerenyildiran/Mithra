@@ -6,7 +6,10 @@
 
 html,
 body {
-  height: 100%;
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='0' x2='0' y1='0' y2='100%25' gradientTransform='rotate(253,730,354)'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23B8F9FF'/%3E%3C/linearGradient%3E%3Cpattern patternUnits='userSpaceOnUse' id='b' width='525' height='437.5' x='0' y='0' viewBox='0 0 1080 900'%3E%3Cg fill-opacity='0.04'%3E%3Cpolygon fill='%23444' points='90 150 0 300 180 300'/%3E%3Cpolygon points='90 150 180 0 0 0'/%3E%3Cpolygon fill='%23AAA' points='270 150 360 0 180 0'/%3E%3Cpolygon fill='%23DDD' points='450 150 360 300 540 300'/%3E%3Cpolygon fill='%23999' points='450 150 540 0 360 0'/%3E%3Cpolygon points='630 150 540 300 720 300'/%3E%3Cpolygon fill='%23DDD' points='630 150 720 0 540 0'/%3E%3Cpolygon fill='%23444' points='810 150 720 300 900 300'/%3E%3Cpolygon fill='%23FFF' points='810 150 900 0 720 0'/%3E%3Cpolygon fill='%23DDD' points='990 150 900 300 1080 300'/%3E%3Cpolygon fill='%23444' points='990 150 1080 0 900 0'/%3E%3Cpolygon fill='%23DDD' points='90 450 0 600 180 600'/%3E%3Cpolygon points='90 450 180 300 0 300'/%3E%3Cpolygon fill='%23666' points='270 450 180 600 360 600'/%3E%3Cpolygon fill='%23AAA' points='270 450 360 300 180 300'/%3E%3Cpolygon fill='%23DDD' points='450 450 360 600 540 600'/%3E%3Cpolygon fill='%23999' points='450 450 540 300 360 300'/%3E%3Cpolygon fill='%23999' points='630 450 540 600 720 600'/%3E%3Cpolygon fill='%23FFF' points='630 450 720 300 540 300'/%3E%3Cpolygon points='810 450 720 600 900 600'/%3E%3Cpolygon fill='%23DDD' points='810 450 900 300 720 300'/%3E%3Cpolygon fill='%23AAA' points='990 450 900 600 1080 600'/%3E%3Cpolygon fill='%23444' points='990 450 1080 300 900 300'/%3E%3Cpolygon fill='%23222' points='90 750 0 900 180 900'/%3E%3Cpolygon points='270 750 180 900 360 900'/%3E%3Cpolygon fill='%23DDD' points='270 750 360 600 180 600'/%3E%3Cpolygon points='450 750 540 600 360 600'/%3E%3Cpolygon points='630 750 540 900 720 900'/%3E%3Cpolygon fill='%23444' points='630 750 720 600 540 600'/%3E%3Cpolygon fill='%23AAA' points='810 750 720 900 900 900'/%3E%3Cpolygon fill='%23666' points='810 750 900 600 720 600'/%3E%3Cpolygon fill='%23999' points='990 750 900 900 1080 900'/%3E%3Cpolygon fill='%23999' points='180 0 90 150 270 150'/%3E%3Cpolygon fill='%23444' points='360 0 270 150 450 150'/%3E%3Cpolygon fill='%23FFF' points='540 0 450 150 630 150'/%3E%3Cpolygon points='900 0 810 150 990 150'/%3E%3Cpolygon fill='%23222' points='0 300 -90 450 90 450'/%3E%3Cpolygon fill='%23FFF' points='0 300 90 150 -90 150'/%3E%3Cpolygon fill='%23FFF' points='180 300 90 450 270 450'/%3E%3Cpolygon fill='%23666' points='180 300 270 150 90 150'/%3E%3Cpolygon fill='%23222' points='360 300 270 450 450 450'/%3E%3Cpolygon fill='%23FFF' points='360 300 450 150 270 150'/%3E%3Cpolygon fill='%23444' points='540 300 450 450 630 450'/%3E%3Cpolygon fill='%23222' points='540 300 630 150 450 150'/%3E%3Cpolygon fill='%23AAA' points='720 300 630 450 810 450'/%3E%3Cpolygon fill='%23666' points='720 300 810 150 630 150'/%3E%3Cpolygon fill='%23FFF' points='900 300 810 450 990 450'/%3E%3Cpolygon fill='%23999' points='900 300 990 150 810 150'/%3E%3Cpolygon points='0 600 -90 750 90 750'/%3E%3Cpolygon fill='%23666' points='0 600 90 450 -90 450'/%3E%3Cpolygon fill='%23AAA' points='180 600 90 750 270 750'/%3E%3Cpolygon fill='%23444' points='180 600 270 450 90 450'/%3E%3Cpolygon fill='%23444' points='360 600 270 750 450 750'/%3E%3Cpolygon fill='%23999' points='360 600 450 450 270 450'/%3E%3Cpolygon fill='%23666' points='540 600 630 450 450 450'/%3E%3Cpolygon fill='%23222' points='720 600 630 750 810 750'/%3E%3Cpolygon fill='%23FFF' points='900 600 810 750 990 750'/%3E%3Cpolygon fill='%23222' points='900 600 990 450 810 450'/%3E%3Cpolygon fill='%23DDD' points='0 900 90 750 -90 750'/%3E%3Cpolygon fill='%23444' points='180 900 270 750 90 750'/%3E%3Cpolygon fill='%23FFF' points='360 900 450 750 270 750'/%3E%3Cpolygon fill='%23AAA' points='540 900 630 750 450 750'/%3E%3Cpolygon fill='%23FFF' points='720 900 810 750 630 750'/%3E%3Cpolygon fill='%23222' points='900 900 990 750 810 750'/%3E%3Cpolygon fill='%23222' points='1080 300 990 450 1170 450'/%3E%3Cpolygon fill='%23FFF' points='1080 300 1170 150 990 150'/%3E%3Cpolygon points='1080 600 990 750 1170 750'/%3E%3Cpolygon fill='%23666' points='1080 600 1170 450 990 450'/%3E%3Cpolygon fill='%23DDD' points='1080 900 1170 750 990 750'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect x='0' y='0' fill='url(%23a)' width='100%25' height='100%25'/%3E%3Crect x='0' y='0' fill='url(%23b)' width='100%25' height='100%25'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .App {
@@ -59,7 +62,7 @@ body {
 /* Navbar */
 .navbar {
   width: 100%;
-  background-color: rgb(233, 227, 227);
+  background-color: rgb(233, 229, 229);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   position: fixed;
   top: 0;
@@ -102,7 +105,7 @@ body {
   color: #343a40;
   font-weight: 700;
   font-size: 1.1rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .profile-icon {
@@ -135,7 +138,6 @@ body {
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   z-index: 2000;
-
 }
 
 .dropdown-item {
@@ -144,7 +146,7 @@ body {
   text-decoration: none;
   display: block;
   font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -166,12 +168,10 @@ button.dropdown-item:hover {
   color: #000000;
 }
 
-
-
 /* Sidebar */
 .sidebar {
   width: 300px;
-  background-color: #f4f4f4;
+  background-color: transparent !important;
   padding: 20px;
   height: 100%;
   box-sizing: border-box;
@@ -229,7 +229,7 @@ button.dropdown-item:hover {
 
 .login-form,
 .register-form {
-  background-color: rgb(233, 227, 227);
+  background-color: rgb(233, 229, 229);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 40px;
@@ -375,7 +375,6 @@ input:focus {
   margin-top: 0;
 }
 
-
 /* Create post */
 .post-container {
   display: flex;
@@ -385,8 +384,8 @@ input:focus {
   min-width: 80vh;
   padding: 40px 0;
   background-color: #f0f0f0;
-  font-family: 'Arial', sans-serif;
-  box-sizing: border-box; 
+  font-family: "Arial", sans-serif;
+  box-sizing: border-box;
 }
 
 .post-heading {
@@ -407,7 +406,7 @@ input:focus {
   font-size: 16px;
   border: 2px solid #ccc;
   border-radius: 8px;
-  resize: none; 
+  resize: none;
   margin-bottom: 20px;
 }
 
@@ -417,7 +416,438 @@ input:focus {
   width: 100%;
 }
 
-.category-select, .submit-button {
+.category-select,
+.submit-button {
+  flex: 1;
+  padding: 12px;
+  margin: 0 10px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.category-select {
+  border: 2px solid #ccc;
+  background-color: white;
+}
+
+.submit-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #004494;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  background-color: rgb(233, 229, 229);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px;
+  height: 60px;
+}
+
+.nav-link {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #0f1a27;
+  font-weight: 600;
+  font-size: 1.2rem;
+  font-family: "Montserrat", sans-serif;
+  transition: color 0.3s ease;
+}
+
+.navbar-logo {
+  margin-left: 100px;
+  margin-right: 10px;
+}
+
+.nav-link:hover {
+  color: #135a9d;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: 1.5rem !important;
+}
+
+.user-greeting {
+  margin-right: 0.8rem;
+  color: #343a40;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+.profile-icon {
+  margin-right: 0.5rem;
+  color: #343a40;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 10rem;
+}
+
+.profile-icon:hover {
+  color: #0056b3;
+}
+
+.dropdown-icon {
+  color: #343a40;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-icon:hover {
+  color: #0056b3;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+}
+
+.dropdown-item {
+  padding: 12px 20px;
+  color: #000000;
+  text-decoration: none;
+  display: block;
+  font-size: 1rem;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #0056b3;
+}
+
+button.dropdown-item {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+button.dropdown-item:hover {
+  background-color: #c92828;
+  color: #000000;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  color: #c92828;
+  background-color: #f1ecec;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.sidebar li a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar li a:hover {
+  background-color: #ddd;
+}
+
+/* Register And Login */
+.login-container,
+.register-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 120px);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 0;
+}
+
+.login-form,
+.register-form {
+  background-color: rgb(233, 229, 229);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin: auto;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.register-btn,
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.register-btn:hover,
+.login-btn:hover {
+  background-color: #0056b3;
+}
+
+.success-msg {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.error-msg {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Profile */
+.profile-page {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  margin-top: 40px;
+  padding: 20px;
+  width: 100%;
+}
+
+.profile-container {
+  width: 250px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-right: 20px;
+  min-height: 350px;
+}
+
+.profile-pic-container {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* panel */
+.react-tabs {
+  flex-grow: 1;
+  max-width: 800px;
+  margin-top: 0;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.react-tabs__tab-list {
+  border-bottom: 2px solid #ccc;
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.react-tabs__tab {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  margin: 0;
+}
+
+.react-tabs__tab--selected {
+  color: #555;
+  border-bottom: 2px solid blue;
+}
+
+.react-tabs__tab-panel {
+  text-align: center;
+  margin-top: 0;
+}
+
+/* Create post */
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 80vh;
+  padding: 40px 0;
+  background-color: #f0f0f0;
+  font-family: "Arial", sans-serif;
+  box-sizing: border-box;
+}
+
+.post-heading {
+  color: #202020;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.post-form {
+  width: 80%;
+  max-width: 800px;
+}
+
+.post-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: none;
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.category-select,
+.submit-button {
   flex: 1;
   padding: 12px;
   margin: 0 10px;
