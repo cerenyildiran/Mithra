@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { FaHeart, FaUserCircle } from "react-icons/fa";
 import axios from "axios";
+import Cookies from 'js-cookie'
 import { timeSince } from "../../utils/timeUtils";
 
-const MyPosts = ({ userId }) => {
+const MyPosts = ({user}) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/posts/${userId}/`
-        );
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
     fetchPosts();
-  }, [userId]);
+  }, []);
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/posts/${user.id}/`
+      );
+      setPosts(response.data.reverse());
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+  const toggleLike = async (post) => {
+    const url = `http://localhost:8000/api/posts/${post.id}/like/`;
+    const token = Cookies.get("accessToken");
+    const method = post.likes.includes(user.username) ? "DELETE" : "POST";
+    try {
+      await axios.post(url, { token, method });
+      fetchPosts();
+    } catch (error) {
+      console.error("Error updating like:", error);
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -37,9 +48,15 @@ const MyPosts = ({ userId }) => {
               <small className="text-muted">
                 {timeSince(post.created_at)} ago
               </small>
-              <button className="btn btn-outline-danger">
-                <FaHeart /> Like
-              </button>
+              {user && (
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => toggleLike(post)}
+                >
+                  <FaHeart />{" "}
+                  {post.likes.includes(user.username) ? "Unlike" : "Like"}
+                </button>
+              )}
             </div>
           </div>
         </div>

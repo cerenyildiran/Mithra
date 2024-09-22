@@ -182,7 +182,7 @@ def get_posts(request):
 
 @require_http_methods(['GET'])
 def get_user_posts(request, user_id):
-    posts = Post.objects.filter(author_id=user_id)
+    posts = Post.objects.filter(author_id=user_id).prefetch_related('likes')
     posts_data = [
         {
             "id": post.id,
@@ -190,7 +190,8 @@ def get_user_posts(request, user_id):
             "content": post.content,
             "category": post.category,
             "created_at": post.created_at,
-            "author": post.author.username
+            "author": post.author.username,
+            "likes": [like.user.username for like in post.likes.all()]
         }
         for post in posts
     ]
@@ -208,7 +209,9 @@ def get_user_likes(request, user_id):
             "content": like.post.content,
             "category": like.post.category,
             "created_at": like.post.created_at,
-            "author": like.post.author.username
+            "like_created_at": like.created_at,
+            "author": like.post.author.username,
+            "likes": [like.user.username for like in like.post.likes.all()]
         }
         for like in likes
     ]

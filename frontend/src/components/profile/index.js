@@ -57,11 +57,11 @@ const Profile = ({ user }) => {
         </TabList>
         <TabPanel>
           <h2>Posts</h2>
-          {user && <MyPosts userId={user.id} />}
+          {user && <MyPosts user={user} />}
         </TabPanel>
         <TabPanel>
           <h2>Likes</h2>
-          {user && <MyLikes userId={user.id} />}
+          {user && <MyLikes user={user} />}
         </TabPanel>
         <TabPanel>
           <h2>Saved</h2>
