@@ -59,7 +59,7 @@ const Posts = ({ reload }) => {
                     <FaHeart />
                     {post.likes.includes(user.username) ? "Unlike" : "Like"}
                   </button>
-                  {}
+                  
                   <FaTrash
                     className="text-muted"
                     style={{ marginLeft: "10px", cursor: "pointer" }}

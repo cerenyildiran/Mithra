@@ -11,7 +11,7 @@ import json
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
 from rest_framework_simplejwt.authentication import default_user_authentication_rule
-from .models import Post, Like
+from .models import Post, Like, Comment
 
 # Create your views here.
 def home(request):
@@ -183,7 +183,7 @@ def get_posts(request):
 @require_http_methods(['GET'])
 def get_post(request, post_id):
     try:
-        post = Post.objects.prefetch_related('likes').get(id=post_id)
+        post = Post.objects.prefetch_related('likes', 'comments').get(id=post_id)
     except Post.DoesNotExist:
         return JsonResponse({'error': 'Post not found'}, status=404)
     post_data = {
@@ -193,7 +193,14 @@ def get_post(request, post_id):
         "category": post.category,
         "created_at": post.created_at,
         "author": post.author.username,
-        "likes": [like.user.username for like in post.likes.all()]
+        "likes": [like.user.username for like in post.likes.all()],
+        "comments": [
+            {
+                "username": comment.user.username,
+                "comment": comment.text,
+                "created_at": comment.created_at
+            } for comment in post.comments.all()
+        ]
     }
     return JsonResponse(post_data, safe=False)
 
@@ -275,9 +282,45 @@ def post_liked(request, post_id):
     return JsonResponse({'error': 'Invalid method'}, status=400)
     
 
-
-
-    
+@csrf_exempt
+@require_http_methods(['POST'])
+def create_comment(request, post_id):
+    if request.headers.get('Content-Type') == 'application/json':
+        data = json.loads(request.body.decode('utf-8'))
+    else:
+        return JsonResponse({'error': 'Content type must be application/json'}, status=415)
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=401)
+    response = verify_token(request)
+    response_data = json.loads(response.content)
+    if 'error' in response_data:
+        return JsonResponse({'error': response_data['error']}, status=response.status_code)
+    user_data = response_data.get('user')
+    if not user_data:
+        return JsonResponse({'error': 'Token validation failed'}, status=401)
+    comment_text = data.get('comment_text')
+    if not comment_text:
+        return JsonResponse({'error': 'Comment text is required'}, status=400)
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    try:
+        user = User.objects.get(id=user_data['id'])
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+    comment = Comment.objects.create(post=post, user=user, text=comment_text)
+    return JsonResponse({
+        'message': 'Comment created successfully',
+        'comment': {
+            'id': comment.id,
+            'text': comment.text,
+            'created_at': comment.created_at.isoformat(),
+            'user': user.username,
+            'post_title': post.title
+        }
+    }, status=201)
 
 
 

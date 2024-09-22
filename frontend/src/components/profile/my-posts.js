@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaHeart, FaUserCircle, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 import { timeSince } from "../../utils/timeUtils";
 
 const MyPosts = ({ user }) => {
@@ -38,7 +39,9 @@ const MyPosts = ({ user }) => {
       {posts.map((post) => (
         <div key={post.id} className="card mb-3">
           <div className="card-body">
-            <h5 className="card-title">{post.title}</h5>
+          <h5 className="card-title">
+              <Link to={`/posts/${post.id}`}>{post.title}</Link>
+            </h5>
             <p className="card-text">{post.content}</p>
             <div className="d-flex justify-content-between align-items-center">
               <div>
