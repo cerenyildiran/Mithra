@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { FaHeart, FaUserCircle } from "react-icons/fa";
+import { FaHeart, FaUserCircle, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { timeSince } from "../utils/timeUtils";
 import { useUser } from "../middleware/useUser";
@@ -51,13 +51,20 @@ const Posts = ({ reload }) => {
             <div className="d-flex justify-content-between align-items-center">
               <span className="badge bg-primary">{post.category}</span>
               {user && (
-                <button
-                  className="btn btn-outline-danger"
-                  onClick={() => toggleLike(post)}
-                >
-                  <FaHeart />{" "}
-                  {post.likes.includes(user.username) ? "Unlike" : "Like"}
-                </button>
+                <div>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => toggleLike(post)}
+                  >
+                    <FaHeart />
+                    {post.likes.includes(user.username) ? "Unlike" : "Like"}
+                  </button>
+                  {}
+                  <FaTrash
+                    className="text-muted"
+                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                  />
+                </div>
               )}
             </div>
           </div>

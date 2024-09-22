@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { FaHeart, FaUserCircle } from "react-icons/fa";
+import { FaHeart, FaUserCircle, FaTrash } from "react-icons/fa";
 import axios from "axios";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 import { timeSince } from "../../utils/timeUtils";
 
-const MyPosts = ({user}) => {
+const MyPosts = ({ user }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -49,13 +49,20 @@ const MyPosts = ({user}) => {
                 {timeSince(post.created_at)} ago
               </small>
               {user && (
-                <button
-                  className="btn btn-outline-danger"
-                  onClick={() => toggleLike(post)}
-                >
-                  <FaHeart />{" "}
-                  {post.likes.includes(user.username) ? "Unlike" : "Like"}
-                </button>
+                <div>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => toggleLike(post)}
+                  >
+                    <FaHeart />{" "}
+                    {post.likes.includes(user.username) ? "Unlike" : "Like"}
+                  </button>
+                  {}
+                  <FaTrash
+                    className="text-muted"
+                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                  />
+                </div>
               )}
             </div>
           </div>

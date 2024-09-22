@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from 'js-cookie'
-import { FaHeart, FaUserCircle } from "react-icons/fa";
+import Cookies from "js-cookie";
+import { FaHeart, FaUserCircle, FaTrash } from "react-icons/fa";
 import { timeSince } from "../../utils/timeUtils";
 
 const MyLikes = ({ user }) => {
@@ -16,8 +16,8 @@ const MyLikes = ({ user }) => {
       const response = await axios.get(
         `http://localhost:8000/api/likes/${user.id}/`
       );
-      const sortedData = response.data.sort((a, b) => 
-        new Date(b.like_created_at) - new Date(a.like_created_at)
+      const sortedData = response.data.sort(
+        (a, b) => new Date(b.like_created_at) - new Date(a.like_created_at)
       );
       setPosts(sortedData);
     } catch (error) {
@@ -37,10 +37,9 @@ const MyLikes = ({ user }) => {
     }
   };
 
-  
   return (
     <div className="container mt-4">
-      <h1 className="text-center mb-3">My Likes Post</h1>
+      <h1 className="text-center mb-3">My Liked Posts</h1>
       {posts.map((post) => (
         <div key={post.id} className="card mb-3">
           <div className="card-body">
@@ -55,13 +54,20 @@ const MyLikes = ({ user }) => {
                 {timeSince(post.created_at)} ago
               </small>
               {user && (
-                <button
-                  className="btn btn-outline-danger"
-                  onClick={() => toggleLike(post)}
-                >
-                  <FaHeart />{" "}
-                  {post.likes.includes(user.username) ? "Unlike" : "Like"}
-                </button>
+                <div>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => toggleLike(post)}
+                  >
+                    <FaHeart />{" "}
+                    {post.likes.includes(user.username) ? "Unlike" : "Like"}
+                  </button>
+                  {}
+                  <FaTrash
+                    className="text-muted"
+                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                  />
+                </div>
               )}
             </div>
           </div>
