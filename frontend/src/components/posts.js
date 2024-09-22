@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FaHeart, FaUserCircle } from 'react-icons/fa';
 import { timeSince } from '../utils/timeUtils';
 
-const Posts = () => {
+const Posts = ({ reload }) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const Posts = () => {
             }
         };
         fetchPosts();
-    }, []);
+    }, [reload]);
 
     return (
         <div className="container mt-4">

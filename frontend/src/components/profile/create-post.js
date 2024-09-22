@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const CreatePost = () => {
+const CreatePost = ({onPostCreated}) => {
   const categories = [
     { name: "Animals", value: "animals" },
     { name: "Foods", value: "foods" },
@@ -35,6 +35,7 @@ const CreatePost = () => {
       setTitle("");
       setContent("");
       setCategory("");
+      onPostCreated();
     } catch (err) {
       setError(
         err.response
