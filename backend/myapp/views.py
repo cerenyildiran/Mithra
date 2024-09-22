@@ -181,6 +181,25 @@ def get_posts(request):
     return JsonResponse(posts_data, safe=False)
 
 @require_http_methods(['GET'])
+def get_post(request, post_id):
+    try:
+        post = Post.objects.prefetch_related('likes').get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    post_data = {
+        "id": post.id,
+        "title": post.title,
+        "content": post.content,
+        "category": post.category,
+        "created_at": post.created_at,
+        "author": post.author.username,
+        "likes": [like.user.username for like in post.likes.all()]
+    }
+    return JsonResponse(post_data, safe=False)
+
+
+
+@require_http_methods(['GET'])
 def get_user_posts(request, user_id):
     posts = Post.objects.filter(author_id=user_id).prefetch_related('likes')
     posts_data = [

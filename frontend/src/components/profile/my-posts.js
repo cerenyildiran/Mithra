@@ -13,7 +13,7 @@ const MyPosts = ({user}) => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/posts/${user.id}/`
+        `http://localhost:8000/api/userposts/${user.id}/`
       );
       setPosts(response.data.reverse());
     } catch (error) {

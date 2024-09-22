@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { FaHeart, FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { timeSince } from "../utils/timeUtils";
 import { useUser } from "../middleware/useUser";
 
@@ -25,10 +26,10 @@ const Posts = ({ reload }) => {
   const toggleLike = async (post) => {
     const url = `http://localhost:8000/api/posts/${post.id}/like/`;
     const token = Cookies.get("accessToken");
-    const method = (post.likes.includes(user.username)) ? 'DELETE' : 'POST'
+    const method = post.likes.includes(user.username) ? "DELETE" : "POST";
     try {
-        await axios.post(url, {token, method})
-        fetchPosts()
+      await axios.post(url, { token, method });
+      fetchPosts();
     } catch (error) {
       console.error("Error updating like:", error);
     }
@@ -40,7 +41,9 @@ const Posts = ({ reload }) => {
       {posts.map((post) => (
         <div key={post.id} className="card mb-3">
           <div className="card-body">
-            <h5 className="card-title">{post.title}</h5>
+            <h5 className="card-title">
+              <Link to={`/posts/${post.id}`}>{post.title}</Link>
+            </h5>
             <h6 className="card-subtitle mb-2 text-muted">
               <FaUserCircle /> {post.author} · {timeSince(post.created_at)}
             </h6>
