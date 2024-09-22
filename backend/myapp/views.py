@@ -164,7 +164,7 @@ def create_post(request):
 
 @require_http_methods(['GET'])
 def get_posts(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().prefetch_related('likes')
     posts_data = []
     for post in posts:
         post_data = {
@@ -173,7 +173,8 @@ def get_posts(request):
             "content": post.content,
             "category": post.category,
             "created_at": post.created_at,
-            "author": post.author.username
+            "author": post.author.username,
+            "likes": [like.user.username for like in post.likes.all()]
         }
         posts_data.append(post_data)
     
@@ -213,6 +214,48 @@ def get_user_likes(request, user_id):
     ]
     return JsonResponse(likes_data, safe=False)
 
+
+@require_http_methods(['POST', 'DELETE'])
+@csrf_exempt
+def post_liked(request, post_id):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        token = data.get('token')
+        method = data.get('method')
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=401)
+    response = verify_token(request)
+    response_data = json.loads(response.content.decode('utf-8'))
+    if 'error' in response_data:
+        return response
+    user = response_data.get('user')
+    if not user:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    if method == 'POST':
+        like, created = Like.objects.get_or_create(user_id=user['id'], post=post)
+        if created:
+            return JsonResponse({'message': 'Post liked successfully'}, status=201)
+        else:
+            return JsonResponse({'error': 'Already liked'}, status=409)
+    elif method == 'DELETE':
+        try:
+            like = Like.objects.get(user_id=user['id'], post=post)
+            like.delete()
+            return JsonResponse({'message': 'Like deleted successfully'}, status=204)
+        except Like.DoesNotExist:
+            return JsonResponse({'error': 'Like not found'}, status=404)
+    return JsonResponse({'error': 'Invalid method'}, status=400)
+    
+
+
+
+    
 
 
 
