@@ -7,6 +7,7 @@ import Profile from "./components/profile";
 import Posts from "./components/posts";
 import Post from "./components/post";
 import Categories from "./components/categories"
+import EditProfile from "./components/profile/edit-profile";
 export default function AppRoutes({ user }) {
   return (
     <Routes>
@@ -14,6 +15,7 @@ export default function AppRoutes({ user }) {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile user={user} />} />
+      <Route path="/profile/edit" element={<EditProfile user={user} />} />
       <Route path="posts" element={<Posts />} />
       <Route path="/posts/:id" element={<Post />} />
       <Route path="/cat/*" element={<Categories />} />
