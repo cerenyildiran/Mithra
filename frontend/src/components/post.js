@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { FaTrashAlt } from "react-icons/fa"
 import { useUser } from "../middleware/useUser";
 
 const Post = () => {
@@ -40,6 +41,17 @@ const Post = () => {
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
+  }
+  const handleDeleteComment = async (commentId) => {
+    const token = Cookies.get("accessToken");
+    try {
+      await axios.post(`http://localhost:8000/api/comment/${commentId}/delete/`, {
+        token: token,
+      });
+      fetchPost();
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
   };
 
   if (!post) {
@@ -93,6 +105,15 @@ const Post = () => {
                 <p className="text-muted">
                   {new Date(comment.created_at).toLocaleString()}
                 </p>
+                {user && (user.username === comment.username || user.username === post.author) && (
+                  <button
+                    onClick={() => handleDeleteComment(comment.id)}
+                    className="btn text-danger"
+                    style={{ border: "none", background: "none" }}
+                  >
+                    <FaTrashAlt />
+                  </button>
+                )}
               </div>
             </div>
           ))}

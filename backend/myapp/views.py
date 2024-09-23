@@ -196,6 +196,7 @@ def get_post(request, post_id):
         "likes": [like.user.username for like in post.likes.all()],
         "comments": [
             {
+                "id": comment.id,
                 "username": comment.user.username,
                 "comment": comment.text,
                 "created_at": comment.created_at
@@ -322,5 +323,32 @@ def create_comment(request, post_id):
         }
     }, status=201)
 
-
+@require_http_methods("POST")
+@csrf_exempt
+def delete_comment(request, comment_id):
+    if request.headers.get('Content-Type') != 'application/json':
+        return JsonResponse({'error': 'Content type must be application/json'}, status=415)
+    data = json.loads(request.body.decode('utf-8'))
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=401)
+    response = verify_token(request)
+    response_data = json.loads(response.content)
+    if 'error' in response_data:
+        return JsonResponse({'error': response_data['error']}, status=response.status_code)
+    user_data = response_data.get('user')
+    if not user_data:
+        return JsonResponse({'error': 'Token validation failed'}, status=401)
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        user = User.objects.get(id=user_data['id'])
+    except Comment.DoesNotExist:
+        return JsonResponse({'error': 'Comment not found'}, status=404)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+    if user.id == comment.user_id or user.id == comment.post.author_id:
+        comment.delete()
+        return JsonResponse({'message': 'Comment deleted successfully'}, status=200)
+    else:
+        return JsonResponse({'error': 'Unauthorized to delete this comment'}, status=403)
 
