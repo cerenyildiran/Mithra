@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { FaHeart, FaUserCircle, FaTrash } from "react-icons/fa";
+import { FaHeart, FaUserCircle } from "react-icons/fa";
 import { timeSince } from "../../utils/timeUtils";
 
 const MyLikes = ({ user }) => {
@@ -62,11 +62,6 @@ const MyLikes = ({ user }) => {
                     <FaHeart />{" "}
                     {post.likes.includes(user.username) ? "Unlike" : "Like"}
                   </button>
-                  {}
-                  <FaTrash
-                    className="text-muted"
-                    style={{ marginLeft: "10px", cursor: "pointer" }}
-                  />
                 </div>
               )}
             </div>

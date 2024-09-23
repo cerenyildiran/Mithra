@@ -27,11 +27,20 @@ const MyPosts = ({ user }) => {
     const method = post.likes.includes(user.username) ? "DELETE" : "POST";
     try {
       await axios.post(url, { token, method });
-      fetchPosts();
+      fetchPosts()
     } catch (error) {
       console.error("Error updating like:", error);
     }
   };
+  const toggleDeletePost = async (post) => {
+    const token = Cookies.get('accessToken')
+    try {
+      await axios.post(`http://localhost:8000/api/posts/${post.id}/delete/`, {token})
+      fetchPosts()
+    } catch (error) {
+      console.error("Error delete post:", error);
+    }
+  }
 
   return (
     <div className="container mt-4">
@@ -60,9 +69,9 @@ const MyPosts = ({ user }) => {
                     <FaHeart />{" "}
                     {post.likes.includes(user.username) ? "Unlike" : "Like"}
                   </button>
-                  {}
                   <FaTrash
                     className="text-muted"
+                    onClick={() => toggleDeletePost(post)}
                     style={{ marginLeft: "10px", cursor: "pointer" }}
                   />
                 </div>

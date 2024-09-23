@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 import json
 from .auth import verify_token
 from myapp.models import Post
@@ -115,4 +116,27 @@ def get_user_posts(request, user_id):
     ]
     return JsonResponse(posts_data, safe=False)
 
-
+@csrf_exempt
+@require_http_methods(['POST'])
+def delete_post(request, post_id):
+    if request.headers.get('Content-Type') != 'application/json':
+        return JsonResponse({'error': 'Content type must be application/json'}, status=415)
+    data = json.loads(request.body.decode('utf-8'))
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=400)
+    response = verify_token(request)
+    response_data = json.loads(response.content)
+    if 'error' in response_data:
+        return JsonResponse({'error': response_data['error']}, status=response_data.get('status', 400))
+    user_data = response_data.get('user')
+    if not user_data:
+        return JsonResponse({'error': 'Token validation failed'}, status=401)
+    try:
+        post = Post.objects.get(id=post_id)
+        if post.author.id != user_data['id']:
+            return JsonResponse({'error': 'Unauthorized to delete this post'}, status=403)
+        post.delete()
+        return JsonResponse({'message': 'Post deleted successfully'}, status=204)
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)
