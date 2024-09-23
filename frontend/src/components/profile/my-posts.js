@@ -27,20 +27,38 @@ const MyPosts = ({ user }) => {
     const method = post.likes.includes(user.username) ? "DELETE" : "POST";
     try {
       await axios.post(url, { token, method });
-      fetchPosts()
+      fetchPosts();
     } catch (error) {
       console.error("Error updating like:", error);
     }
   };
   const toggleDeletePost = async (post) => {
-    const token = Cookies.get('accessToken')
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+
+    if (confirmDelete) {
+      const token = Cookies.get("accessToken");
+      try {
+        await axios.post(`http://localhost:8000/api/posts/${post.id}/delete/`, {
+          token,
+        });
+        fetchPosts();
+      } catch (error) {
+        console.error("Error delete post:", error);
+      }
+    }
+
+    const token = Cookies.get("accessToken");
     try {
-      await axios.post(`http://localhost:8000/api/posts/${post.id}/delete/`, {token})
-      fetchPosts()
+      await axios.post(`http://localhost:8000/api/posts/${post.id}/delete/`, {
+        token,
+      });
+      fetchPosts();
     } catch (error) {
       console.error("Error delete post:", error);
     }
-  }
+  };
 
   return (
     <div className="container mt-4">
@@ -48,7 +66,7 @@ const MyPosts = ({ user }) => {
       {posts.map((post) => (
         <div key={post.id} className="card mb-3">
           <div className="card-body">
-          <h5 className="card-title">
+            <h5 className="card-title">
               <Link to={`/posts/${post.id}`}>{post.title}</Link>
             </h5>
             <p className="card-text">{post.content}</p>
