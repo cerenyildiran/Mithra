@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import {categories} from "../../utils/categories"
 
 const CreatePost = ({onPostCreated}) => {
-  const categories = [
-    { name: "Animals", value: "animals" },
-    { name: "Foods", value: "foods" },
-    { name: "Celebrities", value: "celebrities" },
-    { name: "Politics", value: "politics" },
-    { name: "Art", value: "art" },
-  ];
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -78,7 +72,7 @@ const CreatePost = ({onPostCreated}) => {
           >
             <option value="">Select a Category</option>
             {categories.map((category, index) => (
-              <option key={index} value={category.value}>
+              <option key={index} value={category.path}>
                 {category.name}
               </option>
             ))}
