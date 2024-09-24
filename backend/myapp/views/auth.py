@@ -143,7 +143,7 @@ def edit_profile(request):
         current_user.first_name = first_name
         current_user.last_name = last_name
         current_user.save()
-        return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+        return JsonResponse({'success': 'Profile updated successfully'}, status=200)
     except User.DoesNotExist:
         return JsonResponse({'error': 'User not found'}, status=404)
 
@@ -177,4 +177,4 @@ def change_password(request):
         return JsonResponse({'error': 'New password is invalid or too short'}, status=400)
     user.set_password(new_password)
     user.save()
-    return JsonResponse({'message': 'Password updated successfully'}, status=200)
+    return JsonResponse({'success': 'Password updated successfully'}, status=200)

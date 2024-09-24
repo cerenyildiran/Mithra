@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaChevronDown } from "react-icons/fa";
@@ -13,15 +13,28 @@ const Navbar = ({ user }) => {
     setUser(null);
     navigate("/");
   };
-
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".dropdown-icon") && !event.target.closest(".custom-dropdown-menu")) {
+        setDropdownVisible(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+  useEffect(() => {
+    setDropdownVisible(false);
+  }, [navigate]);
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <Link to="" className="navbar-brand">
-          <img src="/img/logo.png" alt="Logo" style={{ height: "60px" }} />
+        <Link to="/" className="navbar-brand">
+          <img src="/img/logo.png" alt="Logo" />
         </Link>
         <button
           className="navbar-toggler"
@@ -34,13 +47,16 @@ const Navbar = ({ user }) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             {user ? (
               <div className="nav-item d-flex align-items-center">
-                <Link to="/profile" className="nav-link">
-                  <FaUserCircle className="profile-icon" size={25} />
-                </Link>
+{user && (
+          <Link to="/profile" className="nav-link profile-icon">
+            <FaUserCircle size={25} />
+          </Link>
+        )}
                 <span className="user-greeting ms-2">
                   Welcome, {user.username}
                 </span>
@@ -77,7 +93,6 @@ const Navbar = ({ user }) => {
                     >
                       Log out
                     </button>
-                    
                   </div>
                 )}
               </div>

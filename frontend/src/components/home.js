@@ -27,7 +27,6 @@ const Home = () => {
         <SearchPosts />
       </aside>
       <main className="main-content">
-        <h1>Welcome!</h1>
         {user && <CreatePost onPostCreated={handlePostCreated} />}
         <Posts reload={reloadPosts} />
       </main>
