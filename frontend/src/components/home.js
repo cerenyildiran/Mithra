@@ -4,6 +4,7 @@ import { useUser } from "../middleware/useUser";
 import CreatePost from "./profile/create-post";
 import Posts from "./posts";
 import {categories} from "../utils/categories"
+import SearchPosts from "./search";
 
 const Home = () => {
   const {user} = useUser();
@@ -23,6 +24,7 @@ const Home = () => {
             </li>
           ))}
         </ul>
+        <SearchPosts />
       </aside>
       <main className="main-content">
         <h1>Welcome!</h1>
