@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import home, login_view, register_view, verify_token, create_post, get_posts, get_user_posts
-from .views import get_user_likes, post_liked, get_post, create_comment, delete_comment, delete_post
+from .views import get_user_likes, post_liked, get_post, create_comment, delete_comment, delete_post, edit_profile
+from .views import change_password
 
 urlpatterns = [
     path('', home, name='home'),
@@ -16,4 +17,6 @@ urlpatterns = [
     path('likes/<int:user_id>/', get_user_likes, name='get_user_likes'),
     path('comment/<int:post_id>/', create_comment, name='post_comment'),
     path('comment/<int:comment_id>/delete/', delete_comment, name='delete_comment'),
+    path('edit-profile/', edit_profile , name='edit_profile'),
+    path('change-password/', change_password , name='change_password'),
 ]

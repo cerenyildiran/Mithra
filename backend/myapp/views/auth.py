@@ -1,7 +1,8 @@
 from django.http import  JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
@@ -9,6 +10,7 @@ import json
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
 from rest_framework_simplejwt.authentication import default_user_authentication_rule
+import re
 
 @require_http_methods(["POST"])
 @csrf_exempt
@@ -104,3 +106,75 @@ def verify_token(request):
     except (InvalidToken, TokenError) as e:
         print(e)
         return JsonResponse({'error': str(e)}, status=400)
+    
+@require_http_methods(["POST"])
+@csrf_exempt
+def edit_profile(request):
+    if request.headers.get('Content-Type') != 'application/json':
+        return JsonResponse({'error': 'Content type must be application/json'}, status=415)
+    data = json.loads(request.body.decode('utf-8'))
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=400)
+    response = verify_token(request)
+    response_data = json.loads(response.content)
+    if 'error' in response_data:
+        return JsonResponse({'error': response_data['error']}, status=response_data.get('status', 400))
+    user_data = response_data.get('user')
+    if not user_data:
+        return JsonResponse({'error': 'Token validation failed'}, status=401)
+    email = data.get('email').strip()
+    first_name = data.get('first_name').strip()
+    last_name = data.get('last_name').strip()
+    if not email:
+        return JsonResponse({'error': 'Email is required'}, status=400)
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return JsonResponse({'error': 'Invalid email format'}, status=400)
+    if not (2 <= len(first_name) <= 17):
+        return JsonResponse({'error': 'First name must be between 2 and 17 alphabetic characters'}, status=400)
+    if not (2 <= len(last_name) <= 17):
+        return JsonResponse({'error': 'Last name must be between 2 and 17 alphabetic characters'}, status=400)
+    try:
+        current_user = User.objects.get(id=user_data['id'])
+        if User.objects.exclude(id=current_user.id).filter(email=email).exists():
+            return JsonResponse({'error': 'Email is already in use'}, status=400)
+
+        current_user.email = email
+        current_user.first_name = first_name
+        current_user.last_name = last_name
+        current_user.save()
+        return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+
+@require_http_methods(["POST"])
+@csrf_exempt
+def change_password(request):
+    if request.headers.get('Content-Type') != 'application/json':
+        return JsonResponse({'error': 'Content type must be application/json'}, status=415)
+    data = json.loads(request.body.decode('utf-8'))
+    token = data.get('token')
+    if not token:
+        return JsonResponse({'error': 'Token is required'}, status=400)
+    response = verify_token(request)
+    response_data = json.loads(response.content)
+    if 'error' in response_data:
+        return JsonResponse({'error': response_data['error']}, status=response_data.get('status', 400))
+    user_data = response_data.get('user')
+    if not user_data:
+        return JsonResponse({'error': 'Token validation failed'}, status=401)
+    User = get_user_model()
+    try:
+        user = User.objects.get(id=user_data['id'])
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+    if not check_password(current_password, user.password):
+        return JsonResponse({'error': 'Current password is incorrect'}, status=400)
+    if not new_password or len(new_password) < 8:
+        return JsonResponse({'error': 'New password is invalid or too short'}, status=400)
+    user.set_password(new_password)
+    user.save()
+    return JsonResponse({'message': 'Password updated successfully'}, status=200)
