@@ -3,12 +3,10 @@
     "version": "1.0.0",
     "scripts": {
         "start": "concurrently \"npm run client\" \"npm run server\"",
-        "client": "npm start --prefix frontend",
-        "server": "cd backend && python3 manage.py runserver"
+        "client": "cd frontend && npm install && npm run build && npm run start",
+        "server": "cd backend && gunicorn backend.wsgi:application --log-file -"
     },
     "dependencies": {
-        "bootstrap": "^5.3.3",
-        "concurrently": "^6.5.1",
-        "react-bootstrap": "^2.10.4"
+        "concurrently": "^6.5.1"
     }
 }
