@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 import { FaHeart, FaUserCircle } from "react-icons/fa";
 import { timeSince } from "../../utils/timeUtils";
 
@@ -43,28 +44,38 @@ const MyLikes = ({ user }) => {
       {posts.map((post) => (
         <div key={post.id} className="card mb-3">
           <div className="card-body">
-            <h5 className="card-title">{post.title}</h5>
+            <h5 className="card-title">
+              <Link to={`/posts/${post.id}`} className="text-primary">
+                {post.title}
+              </Link>
+            </h5>
             <p className="card-text">{post.content}</p>
             <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <FaUserCircle /> {post.author}
-                <span className="badge bg-primary ml-2">{post.category}</span>
+              <div className="d-flex flex-column align-items-start">
+                <div className="d-flex align-items-center">
+                  <FaUserCircle className="me-2" />
+                  <div>{post.author}</div>
+                </div>
+                <div>
+                  <span className="badge bg-primary mt-2">{post.category}</span>
+                </div>
               </div>
               <small className="text-muted">
                 {timeSince(post.created_at)} ago
               </small>
               {user && (
-                <div>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => toggleLike(post)}
-                  >
-                    <FaHeart />{" "}
-                    {post.likes.includes(user.username) ? "Unlike" : "Like"}
-                  </button>
-                </div>
-              )}
+              <div className="d-flex justify-content-end mt-2">
+                <button
+                  className="btn btn-outline-danger me-2"
+                  onClick={() => toggleLike(post)}
+                >
+                  <FaHeart className="me-1" />
+                  {post.likes.includes(user.username) ? "Unlike" : "Like"}
+                </button>
+              </div>
+            )}
             </div>
+            
           </div>
         </div>
       ))}

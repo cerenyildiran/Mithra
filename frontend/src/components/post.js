@@ -88,7 +88,6 @@ const Post = () => {
       <h1 className="text-center mb-3">{post.title}</h1>
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">{post.title}</h5>
           <p className="card-text">{post.content}</p>
           <p>
             <strong>Category:</strong> {post.category}

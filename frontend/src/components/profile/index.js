@@ -53,18 +53,12 @@ const Profile = ({ user }) => {
         <TabList>
           <Tab>Posts</Tab>
           <Tab>Likes</Tab>
-          <Tab>Saved</Tab>
         </TabList>
         <TabPanel>
-          <h2>Posts</h2>
           {user && <MyPosts user={user} />}
         </TabPanel>
         <TabPanel>
-          <h2>Likes</h2>
           {user && <MyLikes user={user} />}
-        </TabPanel>
-        <TabPanel>
-          <h2>Saved</h2>
         </TabPanel>
       </Tabs>
     </div>

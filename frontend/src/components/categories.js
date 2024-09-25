@@ -23,11 +23,9 @@ const Categories = () => {
     );
   }
   const currentCategory = categories.find(cat => cat.path === categoryName);
-  console.log(categoryName)
   if (currentCategory) {
     return (
       <div className="category-page">
-        <h2>Welcome to the {currentCategory.name} category!</h2>
         <Category category={currentCategory.name}/>
       </div>
     );

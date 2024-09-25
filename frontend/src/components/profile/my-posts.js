@@ -7,10 +7,13 @@ import { timeSince } from "../../utils/timeUtils";
 
 const MyPosts = ({ user }) => {
   const [posts, setPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
   const fetchPosts = async () => {
     try {
       const response = await axios.get(
@@ -21,42 +24,35 @@ const MyPosts = ({ user }) => {
       console.error("Error fetching posts:", error);
     }
   };
+
   const toggleLike = async (post) => {
     const url = `http://localhost:8000/api/posts/${post.id}/like/`;
     const token = Cookies.get("accessToken");
     const method = post.likes.includes(user.username) ? "DELETE" : "POST";
-    try {
-      await axios.post(url, { token, method });
-      fetchPosts();
-    } catch (error) {
-      console.error("Error updating like:", error);
-    }
+    await axios.post(url, { token, method });
+    fetchPosts();
   };
-  const toggleDeletePost = async (post) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
 
-    if (confirmDelete) {
-      const token = Cookies.get("accessToken");
-      try {
-        await axios.post(`http://localhost:8000/api/posts/${post.id}/delete/`, {
-          token,
-        });
-        fetchPosts();
-      } catch (error) {
-        console.error("Error delete post:", error);
-      }
-    }
+  const openModal = (post) => {
+    setSelectedPost(post);
+    setShowModal(true);
+  };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleDeletePost = async () => {
     const token = Cookies.get("accessToken");
     try {
-      await axios.post(`http://localhost:8000/api/posts/${post.id}/delete/`, {
-        token,
-      });
+      await axios.post(
+        `http://localhost:8000/api/posts/${selectedPost.id}/delete/`,
+        { token }
+      );
       fetchPosts();
+      closeModal();
     } catch (error) {
-      console.error("Error delete post:", error);
+      console.error("Error deleting post:", error);
     }
   };
 
@@ -67,37 +63,82 @@ const MyPosts = ({ user }) => {
         <div key={post.id} className="card mb-3">
           <div className="card-body">
             <h5 className="card-title">
-              <Link to={`/posts/${post.id}`}>{post.title}</Link>
+              <Link to={`/posts/${post.id}`} className="text-primary">
+                {post.title}
+              </Link>
             </h5>
             <p className="card-text">{post.content}</p>
             <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <FaUserCircle /> {post.author}
-                <span className="badge bg-primary ml-2">{post.category}</span>
+              <div className="d-flex flex-column align-items-start">
+                <div className="d-flex align-items-center">
+                  <FaUserCircle className="me-2" />
+                  <div>{post.author}</div>
+                </div>
+                <div>
+                  <span className="badge bg-primary mt-2">{post.category}</span>
+                </div>
               </div>
               <small className="text-muted">
                 {timeSince(post.created_at)} ago
               </small>
               {user && (
-                <div>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => toggleLike(post)}
-                  >
-                    <FaHeart />{" "}
-                    {post.likes.includes(user.username) ? "Unlike" : "Like"}
-                  </button>
-                  <FaTrash
-                    className="text-muted"
-                    onClick={() => toggleDeletePost(post)}
-                    style={{ marginLeft: "10px", cursor: "pointer" }}
-                  />
-                </div>
-              )}
+              <div className="d-flex justify-content-end mt-2">
+                <button
+                  className="btn btn-outline-danger me-2"
+                  onClick={() => toggleLike(post)}
+                >
+                  <FaHeart className="me-1" />
+                  {post.likes.includes(user.username) ? "Unlike" : "Like"}
+                </button>
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => openModal(post)}
+                >
+                  <FaTrash />
+                </button>
+              </div>
+            )}
             </div>
           </div>
         </div>
       ))}
+
+      {showModal && (
+        <div className="modal show" tabIndex="-1" style={{ display: "block" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirm Deletion</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={closeModal}
+                  style={{ border: "none", backgroundColor: "transparent" }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>Are you sure you want to delete this post?</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleDeletePost}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
